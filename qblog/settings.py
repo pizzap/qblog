@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 """
 Django settings for qblog project.
 
@@ -22,23 +24,36 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '@ok)7%jjja!pyb3+@m2yz1_o*4(f&ry_du96jpv60=xb-kfe^@'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
 INSTALLED_APPS = (
+    'django_admin_bootstrapped',
     'django.contrib.admin',
     'django.contrib.auth',
-    'django.contrib.contenttypes',
+    'django.contrib.sites',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
-    'blog',
-    'django_markdown',
+    'django.contrib.contenttypes',
+    'django_comments',
+    'mptt',
+    'tagging',
+    'ckeditor',
+    'zinnia_bootstrap',
+    'zinnia',
+    'zinnia_ckeditor',    
+    # 'compressor',
+    # 'blog',
+    # 'django_markdown',
+    'sorl.thumbnail',
+    # 'redactor',
+    # 'taggit',
+    # 'zblog',
+    # 'article',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -57,21 +72,28 @@ ROOT_URLCONF = 'qblog.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
+        # 'BACKEND': 'django.template.backends.jinja2.Jinja2',        
+        'DIRS': [os.path.join(BASE_DIR, 'src', 'templates')],
+        # 'APP_DIRS': True,
         'OPTIONS': {
+            'loaders': (
+                'django.template.loaders.filesystem.Loader',
+                'django.template.loaders.app_directories.Loader',
+                'app_namespace.Loader',
+            ),
             'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
+                'django.template.context_processors.i18n',
+                'django.template.context_processors.debug',                
+                'django.template.context_processors.request',
                 'django.contrib.messages.context_processors.messages',
+                # 'zinnia.context_processors.version',  # Optional
             ],
         },
     },
 ]
 
 WSGI_APPLICATION = 'qblog.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
@@ -83,24 +105,62 @@ DATABASES = {
     }
 }
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
-
+LANGUAGE_CODE = 'ja'
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
+# TEMPLATE_DIRS = (os.path.join(BASE_DIR, 'zblog', 'templates'), )
 
-TEMPLATE_DIRS = (os.path.join(BASE_DIR, "templates"), )
-STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"), )
+STATIC_ROOT = '/var/www/static'
 STATIC_URL = '/static/'
+STATICFILES_DIRS = (os.path.join(BASE_DIR, "src", "static"), )
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'django.core.context_processors.static',
+    'compressor.finders.CompressorFinder',
+)
+
+
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'zblog', 'media')
+MEDIA_URL = '/media/'
+
+SITE_ID = 1
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'Full',
+    },
+    'zinnia-content': {
+        'toolbar_Zinnia': [
+            ['Source', '-Save', 'NewPage', 'DocProps', 'Preview', 'Print', '-', 'Templates'],
+            ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord'],
+            ['Undo', 'Redo'],
+            ['Find', 'Replace', '-', 'SelectAll', '-', 'SpellChecker', 'Scayt'],
+            ['Scayt'],
+            ['Link', 'Unlink', 'Anchor'],
+            ['Image', 'Table', 'HorizontalRule', 'SpecialChar'],
+            ['Maximize'],
+            '/',
+            ['Bold', 'Italic', 'Underline', 'Strike',
+             'Subscript', 'Superscript', '-', 'RemoveFormat'],
+            ['NumberedList', 'BulletedList', '-',
+             'Outdent', 'Indent', '-', 'Blockquote'],
+            ['Styles', 'Format', 'Font', 'FontSize'],
+            [ 'TextColor','BGColor' ],
+        ],
+        'toolbar': 'Zinnia',
+    },
+}
+
+CKEDITOR_UPLOAD_PATH = "uploads/"
+CKEDITOR_JQUERY_URL = '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'
+
+
