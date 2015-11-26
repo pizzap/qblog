@@ -15,6 +15,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 
+os.environ['DJANGO_SETTINGS_MODULE'] = 'qblog.settings'
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Quick-start development settings - unsuitable for production
@@ -47,7 +48,7 @@ INSTALLED_APPS = (
     'zinnia',
     'zinnia_ckeditor',    
     # 'compressor',
-    # 'blog',
+    'qblog',
     # 'django_markdown',
     'sorl.thumbnail',
     # 'redactor',
