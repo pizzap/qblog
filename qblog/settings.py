@@ -18,6 +18,9 @@ import os
 os.environ['DJANGO_SETTINGS_MODULE'] = 'qblog.settings'
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+DEFAULT_FROM_EMAIL = 'forms@exmaple.com'
+SERVER_EMAIL = 'forms@example.com'
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
