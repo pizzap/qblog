@@ -24,6 +24,12 @@
       p.entry-discussions {
         margin-bottom: 0px;
       }
+      .navbar {
+        margin-bottom: 0px;
+      }
+      .container{
+        margin-bottom: 10px;
+      }
     </style>
     <!--[if lt IE 9]>
         <script src="{% static "zinnia_bootstrap/assets/js/html5shiv.js" %}"></script>
@@ -49,7 +55,6 @@
           </button>
           <!-- <img src="{% static "zinnia_bootstrap/img/zinnia.png" %}" class="pull-left" alt="Zinnia's Weblog" /> -->
           <a href="{% url 'zinnia:entry_archive_index' %}" title="Zinnia's Welog" class="navbar-brand" rel="home">
-            デジタルおもちゃ箱
           </a>
         </div>
         <div class="collapse navbar-collapse navbar-ex1-collapse">
@@ -95,6 +100,9 @@
         </div>
       </div>
     </nav>
+    <div class="container">
+      <h1 id="title"><a href="/blog/" style="color:black; text-decoration:none;"><b>デジタルおもちゃ箱</b></a></h1>
+    </div>
     {% block slider %}{% endblock %}
     <div class="container">
       <div class="row">
