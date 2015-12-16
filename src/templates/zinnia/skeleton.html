@@ -3,7 +3,7 @@
 <html lang="{{ LANGUAGE_CODE }}">
   <head>
     <meta charset="utf-8">
-    <title>MyProject's Weblog - {% block title %}{% endblock title %}{% block title-page %}{% endblock title-page %}</title>
+    <title>デジタルおもちゃ箱 - {% block title %}{% endblock title %}{% block title-page %}{% endblock title-page %}</title>
     <meta name="robots" content="follow, all" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="{% block meta-description %}{% trans "Just another Zinnia weblog." %}{% endblock meta-description %}{% block meta-description-page %}{% endblock meta-description-page %}" />
@@ -24,12 +24,28 @@
       p.entry-discussions {
         margin-bottom: 0px;
       }
-      .navbar {
-        margin-bottom: 0px;
-      }
       .container{
         margin-bottom: 10px;
       }
+      .navbar {
+        min-height: 10px !important
+      }
+      .navbar-brand {
+        height: 10px;
+        padding: 10px 10px;
+      }
+      .navbar-nav > li > a {
+        padding-top: 10px !important;
+        padding-bottom: 0px !important;
+      }
+      .navbar-search {
+        padding-top: 2px;
+        padding-bottom: 0px;
+      }
+      .search-query {padding-left:14px;padding-right:14px;margin-bottom:0;-webkit-border-radius:14px;-moz-border-radius:14px;border-radius:14px;}
+      .navbar-search{position:relative;float:left;margin-top:6px;margin-bottom:0;}.navbar-search .search-query{padding:4px 9px;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:13px;font-weight:normal;line-height:1;color:#ffffff;background-color:#626262;border:1px solid #151515;-webkit-box-shadow:inset 0 1px 2px rgba(0, 0, 0, 0.1),0 1px 0px rgba(255, 255, 255, 0.15);-moz-box-shadow:inset 0 1px 2px rgba(0, 0, 0, 0.1),0 1px 0px rgba(255, 255, 255, 0.15);box-shadow:inset 0 1px 2px rgba(0, 0, 0, 0.1),0 1px 0px rgba(255, 255, 255, 0.15);-webkit-transition:none;-moz-transition:none;-ms-transition:none;-o-transition:none;transition:none;}.navbar-search .search-query:-moz-placeholder{color:#cccccc;}
+      .navbar-search .search-query::-webkit-input-placeholder{color:#cccccc;}
+      .navbar-search .search-query:focus,.navbar-search .search-query.focused{padding:5px 10px;color:#333333;text-shadow:0 1px 0 #ffffff;background-color:#ffffff;border:0;-webkit-box-shadow:0 0 3px rgba(0, 0, 0, 0.15);-moz-box-shadow:0 0 3px rgba(0, 0, 0, 0.15);box-shadow:0 0 3px rgba(0, 0, 0, 0.15);outline:0;}
     </style>
     <!--[if lt IE 9]>
         <script src="{% static "zinnia_bootstrap/assets/js/html5shiv.js" %}"></script>
@@ -44,6 +60,7 @@
     {% block script %}{% endblock script %}
   </head>
   <body class="zinnia {% block body-class %}{% endblock body-class %}">
+
     <nav class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation">
       <div class="container">
         <div class="navbar-header">
@@ -53,7 +70,6 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <!-- <img src="{% static "zinnia_bootstrap/img/zinnia.png" %}" class="pull-left" alt="Zinnia's Weblog" /> -->
           <a href="{% url 'zinnia:entry_archive_index' %}" title="Zinnia's Welog" class="navbar-brand" rel="home">
           </a>
         </div>
@@ -65,12 +81,6 @@
                 {% trans "Categories" %}
               </a>
             </li>
-<!--             {% url 'zinnia:author_list' as author_list_url %}
-            <li {% if author_list_url in request.path %}class="active"{% endif %}>
-              <a href="{{ author_list_url }}" title="{% trans "Author list" %}">
-                {% trans "Authors" %}
-              </a>
-            </li> -->
             {% url 'zinnia:tag_list' as tag_list_url %}
             <li {% if tag_list_url in request.path %}class="active"{% endif %}>
               <a href="{{ tag_list_url }}" title="{% trans "Tag list" %}">
@@ -89,20 +99,31 @@
             </li>
             <li class="divider-vertical"></li>
           </ul>
-          <form method="get" action="{% url 'zinnia:entry_search' %}" class="navbar-form navbar-right">
+
+<!--         <form method="get" class="navbar-search pull-right" id="searchform_top" action="{% url 'zinnia:entry_search' %}">
+            <input type="text" name="s" class="search-query span2" placeholder="検索ワードを入力" value="" />
+          </form>
+ -->
+
+          <form method="get" action="{% url 'zinnia:entry_search' %}" class="navbar-search navbar-form navbar-right">
             <div class="form-group">
-              <input type="text" class="search-query form-control" placeholder="{% trans 'Search' %}" name="pattern" value="{{ pattern }}" />
+              <input type="text" class="search-query span2" placeholder="{% trans 'Search' %}" name="pattern" value="{{ pattern }}" />
             </div>
-            <button type="submit" name="submit" class="btn btn-default btn-sm">
+<!--             <button type="submit" name="submit" class="btn btn-default btn-sm">
               <span class="glyphicon glyphicon-search"></span>
             </button>
-          </form>
-        </div>
+ -->          </form>
+
+
+         </div>
       </div>
     </nav>
-    <div class="container">
-      <h1 id="title"><a href="/blog/" style="color:black; text-decoration:none;"><b>デジタルおもちゃ箱</b></a></h1>
-    </div>
+
+
+  <div class="container">
+        <h1 id="title"><a href="/blog/" style="color:black; text-decoration:none;"><b>デジタルおもちゃ箱</b></a></h1>
+  </div>
+
     {% block slider %}{% endblock %}
     <div class="container">
       <div class="row">
@@ -137,7 +158,6 @@
       </div>
     </div>
     <footer class="container">
-<!--       <p>{% blocktrans %}Powered by <a href="http://www.djangoproject.com">Django</a> and <a href="https://github.com/Fantomas42/django-blog-zinnia">Zinnia {{ ZINNIA_VERSION }}</a>.{% endblocktrans %}</p> -->
     </footer>
     <script type="text/javascript" src="{% static "zinnia_bootstrap/assets/js/jquery.js" %}"></script>
     <script type="text/javascript" src="{% static "zinnia_bootstrap/bootstrap/js/bootstrap.min.js" %}"></script>
